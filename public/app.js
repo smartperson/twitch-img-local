@@ -13,4 +13,9 @@ $(document).ready(function() {
     fetchLatestImg();
     window.setInterval(fetchLatestImg, 30000);
   }
+  $('#img-file-upload').change(function() {
+    $("#status-box").html("processing…");
+    this.closest('form').submit();
+    $("input").prop("disabled", true);
+  });
 });

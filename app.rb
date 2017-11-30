@@ -14,16 +14,16 @@ post '/save_image' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
 
-  File.open("./public/#{@filename}", 'wb') do |f|
+  File.open("./public/uploads/#{@filename}", 'wb') do |f|
     f.write(file.read)
   end
-  
-  erb :show_image
+  @status = "Uploaded #{@filename}"
+  erb :form
 end
 
 get '/latest*' do |extension|
   puts request.accept.inspect
-  latest_file = Dir.glob("public/*.jpg").max_by {|f| File.mtime(f)}
+  latest_file = Dir.glob("public/uploads/*.jpg").max_by {|f| File.mtime(f)}
   modified_time = File.mtime(latest_file)
   latest_file = '/'+latest_file.split('/', 2)[1]
   if extension == '.json' 
